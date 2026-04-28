@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ventas — Elite Sport Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <style>
+    .sales-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: start;
+    }
+    .form-panel {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 20px;
+      position: sticky;
+      top: 20px;
+    }
+    .form-panel h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 18px;
+      color: #0F172A;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    @media (max-width: 900px) {
+      .sales-layout { grid-template-columns: 1fr; }
+      .form-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar-root"></div>
+
+  <div id="main-content">
+    <div class="page-header">
+      <h2><i class="fa-solid fa-receipt" style="color:#F59E0B;margin-right:10px;font-size:20px"></i>Ventas / Detalles</h2>
+      <p>Registro y seguimiento de transacciones, cobros e ingresos</p>
+    </div>
+
+    <!-- KPI cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+      <div class="metric-card">
+        <div class="card-icon" style="background:#F0FDF4;color:#10B981"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+        <div class="card-label">Ingresos Totales</div>
+        <div class="card-value" id="kpi-total-rev">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#EFF6FF;color:#3B82F6"><i class="fa-solid fa-file-invoice"></i></div>
+        <div class="card-label">Transacciones</div>
+        <div class="card-value" id="kpi-txn-count">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#D1FAE5;color:#065F46"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="card-label">Pagos Recibidos</div>
+        <div class="card-value" id="kpi-received">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#FFEDD5;color:#9A3412"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="card-label">Pendientes</div>
+        <div class="card-value" id="kpi-pending-rev">—</div>
+      </div>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="sales-layout">
+
+      <!-- Transaction table -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3><i class="fa-solid fa-table-list" style="color:#64748B;margin-right:8px"></i>Listado de Transacciones</h3>
+          <span id="sales-count" style="font-size:12px;color:#64748B;background:#F1F5F9;padding:3px 10px;border-radius:20px;font-weight:600"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Estudiante / Cliente</th>
+                <th>Grupo</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Método</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="sales-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- New transaction form -->
+      <div class="form-panel">
+        <h3><i class="fa-solid fa-plus-circle" style="color:#F59E0B;margin-right:8px"></i>Nueva Transacción</h3>
+        <form id="txn-form" autocomplete="off">
+          <div class="form-group">
+            <label for="f-student">Estudiante / Cliente *</label>
+            <input type="text" id="f-student" class="form-control" placeholder="Nombre completo" required>
+          </div>
+          <div class="form-group">
+            <label for="f-group">Grupo</label>
+            <select id="f-group" class="form-control">
+              <option>Competitivo</option>
+              <option>Juvenil</option>
+              <option>Infantil A</option>
+              <option>Infantil B</option>
+              <option>Adultos Avanzado</option>
+              <option>Adultos Principiante</option>
+              <option>Varios</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-type">Tipo de Transacción</label>
+            <select id="f-type" class="form-control">
+              <option>Mensualidad</option>
+              <option>Matrícula Anual</option>
+              <option>Venta Equipo</option>
+              <option>Venta Uniforme</option>
+              <option>Examen de Rango</option>
+              <option>Otros</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-amount">Monto ($) *</label>
+            <input type="number" id="f-amount" class="form-control" placeholder="0.00" min="1" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="f-method">Método de Pago</label>
+            <select id="f-method" class="form-control">
+              <option>Efectivo</option>
+              <option>Transferencia</option>
+              <option>Tarjeta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-desc">Descripción</label>
+            <input type="text" id="f-desc" class="form-control" placeholder="Descripción opcional">
+          </div>
+          <div class="form-group">
+            <label for="f-status">Estado</label>
+            <select id="f-status" class="form-control">
+              <option value="Recibido">Recibido</option>
+              <option value="Pendiente">Pendiente</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">
+            <i class="fa-solid fa-plus" style="margin-right:6px"></i>Registrar Transacción
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sales.js"></script>
+</body>
+</html>

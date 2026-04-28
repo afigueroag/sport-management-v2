@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff — Elite Sport Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div id="sidebar-root"></div>
+
+  <div id="main-content">
+    <div class="page-header">
+      <h2><i class="fa-solid fa-users" style="color:#F59E0B;margin-right:10px;font-size:20px"></i>Staff / Instructores</h2>
+      <p>Horas reportadas, pagos y estado de nómina del período actual</p>
+    </div>
+
+    <!-- KPI cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+      <div class="metric-card">
+        <div class="card-icon" style="background:#EFF6FF;color:#3B82F6"><i class="fa-solid fa-stopwatch"></i></div>
+        <div class="card-label">Total Horas Reportadas</div>
+        <div class="card-value" id="kpi-hours">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#F0FDF4;color:#10B981"><i class="fa-solid fa-dollar-sign"></i></div>
+        <div class="card-label">Monto Total</div>
+        <div class="card-value" id="kpi-total">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#D1FAE5;color:#065F46"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="card-label">Pagado</div>
+        <div class="card-value" id="kpi-paid">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="card-icon" style="background:#FFEDD5;color:#9A3412"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="card-label">Pendiente de Pago</div>
+        <div class="card-value" id="kpi-pend">—</div>
+      </div>
+    </div>
+
+    <!-- Table card -->
+    <div class="table-card">
+      <div class="table-card-header">
+        <h3><i class="fa-solid fa-list-check" style="color:#64748B;margin-right:8px"></i>Lista de Instructores</h3>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="filter-pills">
+            <button class="pill staff-pill active" data-filter="all">Todos</button>
+            <button class="pill staff-pill" data-filter="paid">Pagados</button>
+            <button class="pill staff-pill" data-filter="pending">Pendientes</button>
+          </div>
+          <span id="staff-count" style="font-size:12px;color:#64748B;background:#F1F5F9;padding:3px 10px;border-radius:20px;font-weight:600"></span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Rol</th>
+              <th>Día(s)</th>
+              <th style="text-align:center">Horas</th>
+              <th>Tarifa</th>
+              <th>Total $</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="staff-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/staff.js"></script>
+</body>
+</html>
